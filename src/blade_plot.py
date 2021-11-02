@@ -29,6 +29,7 @@ import pdb
 import time
 import copy
 import numpy as np
+import shutil
 
 
 #---------------------------------------------------------------------------------------------#
@@ -102,7 +103,8 @@ class BladePlot:
         self.shroud_coordinates = np.real(blade_in.shroud_coordinates)
 
         # Create output directory
-        os.system("rm -rf output")
+        #os.system("rm -rf output")
+        shutil.rmtree('output')
         if os.path.exists("output") is False:
             os.mkdir("output")
 

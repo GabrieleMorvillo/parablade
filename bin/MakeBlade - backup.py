@@ -1,4 +1,4 @@
-#!C:\Users\GMrx1\AppData\Local\Programs\Python\Python39\python.exe
+#!C:\Users\GMrx1\anaconda3
 ###############################################################################################
 #                    ____                 ____  _           _                                 #
 #                   |  _ \ __ _ _ __ __ _| __ )| | __ _  __| | ___                            #
@@ -63,13 +63,11 @@ DIR = os.getcwd()
 
 try:
     #INFile = DIR + sys.argv[-1]
-     INFile = DIR +"\\"+ sys.argv[-1]
- #   INFile = sys.argv[-1]
+   # INFile = DIR +"\\"+ sys.argv[-1]
+    INFile = sys.argv[1]
 except:
-     INFile = DIR + '\\blade.cfg'      # Default File name
- #   INFile = DIR + '\\blade.cfg'      # Default File name
-
-#INFile = "C:\\Users\\GMrx1\\Desktop\\github\\parablade\\testcases\\BladeProfiles\\3D_examples\\axial_turbine_rotor\\axial_turbine_3D.cfg"
+    #INFile = DIR + 'blade.cfg'      # Default File name
+    INFile = DIR + '\\blade.cfg'      # Default File name
 
 try:
     IN = ReadUserInput(INFile)

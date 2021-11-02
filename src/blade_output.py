@@ -30,6 +30,7 @@ import time
 import copy
 import numpy as np
 from numpy.core.shape_base import block
+import shutil
 
 #----------------------------------------------------------------------------------------------------------------------#
 # Define BladeOutput class
@@ -61,7 +62,8 @@ class BladeOutput:
 
         # Create output directory
         self.full_path = None
-        os.system("rm -rf output")
+        #os.system("rm -rf output")
+        shutil.rmtree('output')
         if os.path.exists("output") is False:
             os.mkdir("output")
 
@@ -76,11 +78,12 @@ class BladeOutput:
         print("Writting blade surface coordinates...", end='                  ')
 
         # Create output directory in case it does not exist
-        full_path = path + '/output/coordinates/'
+        full_path = path + '\\output\\coordinates'
         if os.path.exists(full_path) is False:
             os.mkdir(full_path)
+            #os.mkdir(Dir + "\\MeangenOutput")
 
-        file = open(full_path + filename + '.csv', 'w')
+        file = open(full_path +"\\"+ filename + '.csv', 'w')
 
         if self.NDIM == 3:
             header = "\"Point\",\t\"x_coord\",\t\"y_coord\",\t\"z_coord\",\t\"u\",\t\"v\"\n"
@@ -116,12 +119,12 @@ class BladeOutput:
         print("Writting hub surface coordinates...", end='                    ')
 
         # Create output directory in case it does not exist
-        full_path = path + '/output/coordinates/'
+        full_path = path + '\\output\\coordinates'
         if os.path.exists(full_path) is False:
             os.mkdir(full_path)
 
         # Print the hub surface coordinates
-        file = open(full_path + filename + '.csv', 'w')
+        file = open(full_path +"\\"+ filename + '.csv', 'w')
         header = "\"Point\",\t\"x_coord\",\t\"y_coord\",\t\"z_coord\",\t\"u\"\n"
         file.write(header)
         for i in range(np.shape(self.hub_coordinates)[1]):
@@ -142,12 +145,12 @@ class BladeOutput:
         print("Writting shroud surface coordinates...", end='                 ')
 
         # Create output directory in case it does not exist
-        full_path = path + '/output/coordinates/'
+        full_path = path + '\\output\\coordinates'
         if os.path.exists(full_path) is False:
             os.mkdir(full_path)
 
         # Print the shroud surface coordinates
-        file = open(full_path + filename + '.csv', 'w')
+        file = open(full_path +"\\"+ filename + '.csv', 'w')
         header = "\"Point\",\t\"x_coord\",\t\"y_coord\",\t\"z_coord\",\t\"u\"\n"
         file.write(header)
         for i in range(np.shape(self.shroud_coordinates)[1]):
@@ -170,12 +173,12 @@ class BladeOutput:
         if self.OPERATION_TYPE == 'SENSITIVITY':
 
             # Create output directory in case it does not exist
-            full_path = path + '/output/sensitivities/'
+            full_path = path + '\\output\\sensitivities'
             if os.path.exists(full_path) is False:
                 os.mkdir(full_path)
 
             for key in self.surface_sensitivity.keys():
-                file = open(full_path + filename + '_' + key + '.csv', 'w')
+                file = open(full_path +"\\"+ filename + '_' + key + '.csv', 'w')
                 if self.NDIM == 3:
                     header = "\"Point\"\t\"x_coord\"\t\"y_coord\"\t\"z_coord\"\t\" x_sens\"\t\"y_sens\"\t\"z_sens\"\t\" x_normal\"\t\"y_normal\"\t\"z_normal\"\n"
                     file.write(header)
@@ -225,7 +228,7 @@ class BladeOutput:
         """
 
         # Create output directory in case it does not exist
-        self.full_path = path + '/output/mesh_files/'
+        self.full_path = path + '\\output\\mesh_files'
         if os.path.exists(self.full_path) is False:
             os.mkdir(self.full_path)
 
@@ -246,7 +249,7 @@ class BladeOutput:
 
         print("Writing UMG2 mesh generation files...", end='                  ')
 
-        blade = open(self.full_path + "/blade.geometry", 'w')
+        blade = open(self.full_path + "\\blade.geometry", 'w')
         blade.write("Not yet implemented")  # TODO implement 2D mesh generation
 
         print('Done!')
@@ -268,7 +271,7 @@ class BladeOutput:
         u = np.linspace(0.00 + h, 1.00 - h, n_points)
 
         # Write blade.crv file
-        blade_file = open(self.full_path + "blade.crv", 'w')
+        blade_file = open(self.full_path + "\\blade.crv", 'w')
         section_header = "#blade_%i\n"
         index = 1
         for v_section in v:
@@ -283,14 +286,14 @@ class BladeOutput:
         blade_file.close()
 
         # Write hub.crv file
-        hub_file = open(self.full_path + "hub.crv",'w')
+        hub_file = open(self.full_path + "\\hub.crv",'w')
         hub_coordinates = np.real(self.blade_in.get_extended_hub_coordinates(u))
         for i in range(n_points):
             hub_file.write("%+.16e\t%+.16e\t%+.16e\n" % (hub_coordinates[1, i], 0.00, hub_coordinates[0, i]))
         hub_file.close()
 
         # Write shroud.crv file
-        shroud_file = open(self.full_path + "shroud.crv",'w')
+        shroud_file = open(self.full_path + "\\shroud.crv",'w')
         shroud_coordinates = np.real(self.blade_in.get_extended_shroud_coordinates(u))
         for i in range(n_points):
             shroud_file.write("%+.16e\t%+.16e\t%+.16e\n" % (shroud_coordinates[1, i], 0.00, shroud_coordinates[0, i]))
@@ -308,7 +311,7 @@ class BladeOutput:
         print('Writing BFM input file...', end='                        ')
 
         # Opening BFM input file
-        BFM_input_file = open(self.full_path + "BFM_input.drg", 'w')
+        BFM_input_file = open(self.full_path + "\\BFM_input.drg", 'w')
         BFM_input_file.write("<header>\n\n")
         BFM_input_file.write("[version inputfile]\n")
         BFM_input_file.write("1.0.0\n\n")

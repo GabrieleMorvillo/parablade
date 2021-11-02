@@ -1,4 +1,4 @@
-#!C:\Users\GMrx1\AppData\Local\Programs\Python\Python39\python.exe
+#!C:\Users\GMrx1\anaconda3
 ###############################################################################################
 #                    ____                 ____  _           _                                 #
 #                   |  _ \ __ _ _ __ __ _| __ )| | __ _  __| | ___                            #
@@ -8,7 +8,7 @@
 #                                                                                             #
 ###############################################################################################
 
-################################# FILE NAME: MakeBlade.py #####################################
+################################# FILE NAME: PlotBlade.py #####################################
 #=============================================================================================#
 # author: Roberto, Nitish Anand                                                               |
 #    :PhD Candidates,                                                                         |
@@ -24,13 +24,13 @@
 #---------------------------------------------------------------------------------------------#
 # Importing general packages
 #---------------------------------------------------------------------------------------------#
-from __future__ import print_function
 import numpy as np
 import matplotlib.pyplot as plt
 import pdb
 import sys
 import os
 import time
+
 
 #---------------------------------------------------------------------------------------------#
 # Setting Environment
@@ -40,15 +40,15 @@ BLADE_HOME = os.environ["BLADE_HOME"]
 #sys.path.append(BLADE_HOME+'/common/')
 sys.path.append(BLADE_HOME+'\\src')
 sys.path.append(BLADE_HOME+'\\common')
-
 #---------------------------------------------------------------------------------------------#
 # Importing ParaBlade classes and functions
 #---------------------------------------------------------------------------------------------#
-from common.common import *
+from common.common import PrintBanner
 from common.config import *
 from src.blade_3D import Blade3D
 from src.blade_plot import BladePlot
 from src.blade_output import BladeOutput
+
 
 #---------------------------------------------------------------------------------------------#
 # Print ParaBlade Banner
@@ -62,19 +62,21 @@ PrintBanner()
 DIR = os.getcwd() 
 
 try:
-    #INFile = DIR + sys.argv[-1]
-     INFile = DIR +"\\"+ sys.argv[-1]
- #   INFile = sys.argv[-1]
+     #INFile = DIR +"\\"+ sys.argv[-1]
+     INFile = sys.argv[1]
+     #INFile = DIR +"\\"+ sys.argv[-1]
 except:
+    #INFile = DIR + 'blade.cfg'      # Default File name
      INFile = DIR + '\\blade.cfg'      # Default File name
- #   INFile = DIR + '\\blade.cfg'      # Default File name
+    # INFile = DIR + "\\testcases\\BladeProfiles\\3D_examples\\axial_turbine_rotor\\axial_turbine_3D.cfg"      # Default File name
+
 
 #INFile = "C:\\Users\\GMrx1\\Desktop\\github\\parablade\\testcases\\BladeProfiles\\3D_examples\\axial_turbine_rotor\\axial_turbine_3D.cfg"
 
 try:
     IN = ReadUserInput(INFile)
 except:
-    raise Exception('\n\n\n''Something went wrong when reading the configuration file,exiting the program...'
+     raise Exception('\n\n\n''Something went wrong when reading the configuration file,exiting the program...'
                     '\n\nTo call MakeBlade.py from terminal type:'
                     '\n\tMakeBlade.py <configuration file name>')
 
@@ -84,22 +86,14 @@ except:
 t = time.time()
 blade_object = Blade3D(IN)
 blade_object.make_blade()
-print('The blade geometry was generated in %(my_time).5f seconds\n' % {'my_time': time.time() - t})
+print('The blade geometry was generated in %(my_time).5f seconds' % {'my_time': time.time() - t})
 
-# --------------------------------------------------------------------------------------------#
-# Write the output files
-# --------------------------------------------------------------------------------------------#
-blade_output_object = BladeOutput(blade_object)
-blade_output_object.print_blade_coordinates()
-blade_output_object.print_hub_coordinates()
-blade_output_object.print_shroud_coordinates()
-if IN['OPERATION_TYPE'] == "SENSITIVITY":
-    blade_output_object.print_sensitivity()
+#---------------------------------------------------------------------------------------------#
+# Plot the blade profile
+#---------------------------------------------------------------------------------------------#
+plot_blade_object = BladePlot(blade_object)
+plot_blade_object.make_plots()
 
-# --------------------------------------------------------------------------------------------#
-# Write Mesh files
-# --------------------------------------------------------------------------------------------#
-blade_output_object.write_mesh_file()
 
 #---------------------------------------------------------------------------------------------#
 # End of file
