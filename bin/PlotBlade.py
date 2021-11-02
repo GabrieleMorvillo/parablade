@@ -72,7 +72,7 @@ except:
     # INFile = DIR + "\\testcases\\BladeProfiles\\3D_examples\\axial_turbine_rotor\\axial_turbine_3D.cfg"      # Default File name
 
 #INFile = os.environ["parablade_infile"]
-#INFile = "C:\\Users\\GMrx1\\Desktop\\github\\parablade\\testcases\\BladeProfiles\\3D_examples\\axial_turbine_rotor\\axial_turbine_3D.cfg"
+# INFile = "C:\\Users\\GMrx1\\Desktop\\github\\parablade\\testcases\\BladeProfiles\\3D_examples\\axial_turbine_rotor\\axial_turbine_3D.cfg"
 
 try:
     IN = ReadUserInput(INFile)

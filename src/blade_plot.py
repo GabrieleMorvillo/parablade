@@ -104,7 +104,8 @@ class BladePlot:
 
         # Create output directory
         #os.system("rm -rf output")
-        shutil.rmtree('output')
+        if os.path.exists("output") is True:
+             shutil.rmtree('output')
         if os.path.exists("output") is False:
             os.mkdir("output")
 

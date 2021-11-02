@@ -63,8 +63,8 @@ DIR = os.getcwd()
 
 try:
     #INFile = DIR + sys.argv[-1]
-     INFile = DIR +"\\"+ sys.argv[-1]
- #   INFile = sys.argv[-1]
+     #INFile = DIR +"\\"+ sys.argv[-1]
+     INFile = sys.argv[-1]
 except:
      INFile = DIR + '\\blade.cfg'      # Default File name
  #   INFile = DIR + '\\blade.cfg'      # Default File name

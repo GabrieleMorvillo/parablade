@@ -63,7 +63,9 @@ class BladeOutput:
         # Create output directory
         self.full_path = None
         #os.system("rm -rf output")
-        shutil.rmtree('output')
+        if os.path.exists("output") is True:
+             shutil.rmtree('output')
+        # shutil.rmtree('output')
         if os.path.exists("output") is False:
             os.mkdir("output")
 
